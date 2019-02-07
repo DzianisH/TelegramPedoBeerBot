@@ -4,16 +4,19 @@ const getElem= arr => {
     return arr[Math.floor(Math.random() * arr.length)];
 };
 
-const getStartMessage = () => {
+module.exports.startMessage = () => {
     return getElem(json.startup);
 };
 
-const getJoke = () => {
+module.exports.joke = () => {
     return getElem(json.joke);
 };
 
-console.log(json);
+module.exports.howToSupport = () => {
+    return getElem(json.github);
+};
 
-module.exports.getStartMessage = getStartMessage;
-module.exports.getJoke = getJoke;
+module.exports.fuckYou = () => {
+    return getElem(json.fuckYou);
+};
 
