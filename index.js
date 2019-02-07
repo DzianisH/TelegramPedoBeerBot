@@ -48,7 +48,7 @@ bot.on([BUTTONS.support.command], msg => {
 });
 
 bot.on([/.*@PedoBeerBot.*/, '/help', '/start'], msg => {
-    if (msg.form.id !== BIBIN_ID) {
+    if (msg.from.id !== BIBIN_ID) {
         bot.sendMessage(msg.chat.id, store.startMessage(), {replyMarkup})
     } else {
         bot.sendMessage(msg.chat.id, store.fuckYou(), {replyMarkup});
