@@ -15,7 +15,7 @@ const BUTTONS = {
 };
 
 const bot = new TeleBot({
-    token: process.env.TOKEN,
+    token: getAPIToken(),
     usePlugins: ['namedButtons'],
     pluginConfig: {
         namedButtons: {
@@ -56,3 +56,12 @@ bot.on([/.*@PedoBeerBot.*/, '/help', '/start'], msg => {
 });
 
 bot.start();
+
+
+function getAPIToken() {
+    if (process.argv.length < 3 || !process.argv[2] || process.argv[2].trim() === ''){
+        console.error("You must provide Telegram token. Ex: `node index.js YOUR_TOKEN`");
+        throw new Error("Please, provide token");
+    }
+    return process.argv[2];
+}
