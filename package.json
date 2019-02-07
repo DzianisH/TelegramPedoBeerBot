@@ -1,0 +1,10 @@
+{
+  "name": "TelegramPedoBeerBot",
+  "version": "1.0.0",
+  "description": "Bot for liking your mom and drinking beer.",
+  "main": "index.js",
+  "dependencies": {
+    "telebot": "^1.2.6"
+  },
+  "license": "MIT"
+}
