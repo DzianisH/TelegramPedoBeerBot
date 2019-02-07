@@ -41,7 +41,7 @@ bot.on([BUTTONS.joke.command], msg => {
 
 bot.on([BUTTONS.support.command], msg => {
     if (msg.from.id !== BIBIN_ID) {
-        bot.sendMessage(msg.chat.id, store.joke(), {replyMarkup});
+        bot.sendMessage(msg.chat.id, store.howToSupport(), {replyMarkup});
     } else {
         bot.sendMessage(msg.chat.id, store.fuckYou(), {replyMarkup});
     }
