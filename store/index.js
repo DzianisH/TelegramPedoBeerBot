@@ -20,3 +20,10 @@ module.exports.fuckYou = () => {
     return getElem(json.fuckYou);
 };
 
+module.exports.silence = () => {
+    return getElem(json.silence);
+};
+
+module.exports.forceShutUp = alreadyShutedUp => {
+    return getElem(alreadyShutedUp ? json.iAlreadyShutUp : json.iWillShutUp);
+};

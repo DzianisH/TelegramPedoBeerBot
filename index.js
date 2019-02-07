@@ -2,6 +2,7 @@ const TeleBot = require('telebot');
 const store = require('./store');
 
 const BIBIN_ID = 280807529;
+const SILENCE_TIMEOUT = 45 * 60 * 1000;
 
 const BUTTONS = {
     joke: {
@@ -9,8 +10,12 @@ const BUTTONS = {
         command: '/joke'
     },
     support: {
-        label: 'Как мне помочь с фразочками?',
+        label: 'Как добавить фразочки?',
         command: '/support'
+    },
+    shutUp: {
+        label: "Завали",
+        command: "/shutUp"
     }
 };
 
@@ -27,7 +32,7 @@ const bot = new TeleBot({
 const replyMarkup = bot.keyboard(
     [
         [BUTTONS.joke.label],
-        [BUTTONS.support.label]
+        [BUTTONS.support.label, BUTTONS.shutUp.label]
     ], {resize: true});
 
 
@@ -55,8 +60,31 @@ bot.on([/.*@PedoBeerBot.*/, '/help', '/start'], msg => {
     }
 });
 
+const onSilence = {};
+bot.on(['text'], msg => {
+    const chatId = msg.chat.id;
+    clearSilence(chatId);
+    if (!msg.skipSilenceTimeout) {
+        onSilence[chatId] = setInterval(() => bot.sendMessage(chatId, store.silence(), {replyMarkup}), SILENCE_TIMEOUT);
+    }
+});
+
+bot.on([BUTTONS.shutUp.command], msg => {
+    msg.skipSilenceTimeout = true;
+    const chatId = msg.chat.id;
+    bot.sendMessage(chatId, store.forceShutUp(!onSilence[chatId]));
+});
+
 bot.start();
 
+
+function clearSilence(chatId) {
+    const element = onSilence[chatId];
+    if (element) {
+        clearTimeout(element);
+        onSilence[chatId] = undefined;
+    }
+}
 
 function getAPIToken() {
     if (process.argv.length < 3 || !process.argv[2] || process.argv[2].trim() === ''){
