@@ -6,7 +6,7 @@ const SILENCE_TIMEOUT = 45 * 60 * 1000;
 
 const BUTTONS = {
     joke: {
-        label: 'Пошутить шутейку',
+        label: 'Хочу шутейку',
         command: '/joke'
     },
     support: {
